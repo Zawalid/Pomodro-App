@@ -1,0 +1,578 @@
+@import url("https://fonts.googleapis.com/css2?family=Figtree:wght@400;700;900&display=swap");
+:root {
+  --firstColor: #1e213f;
+  --secondColor: #161932;
+  --thirdColor: #787a91;
+  --theme: #ba4949;
+}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Figtree", sans-serif;
+}
+::-webkit-scrollbar {
+  display: none;
+}
+body {
+  background-color: var(--theme);
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  gap: 50px;
+  padding-block: 15px 40px;
+  position: relative;
+  transition: 0.7s;
+  -webkit-transition: 0.7s;
+  -moz-transition: 0.7s;
+  -ms-transition: 0.7s;
+  -o-transition: 0.7s;
+}
+/* Title & Setting Icon */
+body > :first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 40%;
+  border-bottom: 1px solid #fff;
+  padding-bottom: 18px;
+}
+body > :first-child div:first-child {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+body > :first-child img {
+  width: 35px;
+}
+body > :first-child h2 {
+  color: white;
+  letter-spacing: 1.4px;
+}
+.setting_icon {
+  font-size: 25px;
+  color: white;
+  cursor: pointer;
+}
+/* Options */
+.options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 30px;
+  background-color: rgba(255, 255, 255, 0.1);
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
+  box-shadow: -1px 6px 10px rgba(0, 0, 0, 0.3);
+}
+.options div {
+  padding: 15px 20px;
+  cursor: pointer;
+  color: #fff;
+  border-radius: 30px;
+  transition: 0.5s;
+  -webkit-border-radius: 30px;
+  -moz-border-radius: 30px;
+  -ms-border-radius: 30px;
+  -o-border-radius: 30px;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+}
+.options div p {
+  font-weight: bold;
+  user-select: none;
+}
+.options div.active {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.options div.active_dark {
+  background-color: #fff;
+  color: #000;
+}
+/* Timer */
+.timer {
+  width: 400px;
+  height: 400px;
+  display: grid;
+  place-content: center;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  -ms-border-radius: 50%;
+  -o-border-radius: 50%;
+  box-shadow: 0px 1px 12px 14px rgba(0, 0, 0, 0.3);
+  transform: scale(1.1);
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  position: relative;
+}
+.timer,
+.options {
+  transition: 0.4s;
+  -webkit-transition: 0.4s;
+  -moz-transition: 0.4s;
+  -ms-transition: 0.4s;
+  -o-transition: 0.4s;
+}
+.timer.started {
+  transform: scale(1);
+  box-shadow: none;
+  -webkit-transform: scale(1);
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+}
+.timer h1 {
+  font-size: 100px;
+  color: #fff;
+  margin-bottom: 25px;
+}
+.timer button {
+  border: none;
+  color: #fff;
+  background-color: transparent;
+  font-size: 25px;
+  letter-spacing: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 15px;
+}
+/* ------------------------------------------------ */
+/* Components */
+/* ? Toggle Switch */
+.toggle-checkbox {
+  appearance: none;
+  position: absolute;
+}
+.toggle-switch {
+  width: 65px;
+  height: 35px;
+  background-color: #ccc;
+  border-radius: 20px;
+  cursor: pointer;
+  position: relative;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+}
+.toggle-switch::before {
+  content: "";
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 1px;
+  background-color: white;
+  border-radius: 50%;
+  left: 5px;
+  top: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.3s;
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+}
+.toggle-checkbox:checked + .toggle-switch {
+  background-color: #9dd25c;
+}
+.toggle-checkbox:checked + .toggle-switch::before {
+  left: 35px;
+}
+/*? Toggle Switch  */
+/* ? DropDown */
+.dropdown {
+  position: relative;
+  width: 150px;
+}
+.dropdown .dropdown__header {
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #eee;
+  border: none;
+  outline-color: transparent;
+  margin-top: 8px;
+}
+.dropdown .dropdown__header .dropdown__title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.dropdown .dropdown__header .dropdown__title span {
+  color: #666;
+  letter-spacing: 1px;
+}
+.dropdown .dropdown__header .dropdown__title svg {
+  color: var(--firstColor);
+  font-size: 19px;
+  cursor: pointer;
+}
+.dropdown .dropdown__body {
+  list-style: none;
+  padding: 15px;
+  background-color: white;
+  box-shadow: 0 0 10px #ccc;
+  border-radius: 10px;
+  position: absolute;
+  width: 100%;
+  top: 115%;
+  opacity: 0;
+  z-index: -1;
+  transition: 0.5s;
+  transform: translateY(-100%);
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+  -webkit-transform: translateY(-100%);
+  -moz-transform: translateY(-100%);
+  -ms-transform: translateY(-100%);
+  -o-transform: translateY(-100%);
+}
+.dropdown__body.drop {
+  opacity: 1;
+  z-index: 2;
+  transform: translateY(0);
+  -webkit-transform: translateY(0);
+  -moz-transform: translateY(0);
+  -ms-transform: translateY(0);
+  -o-transform: translateY(0);
+}
+.dropdown .dropdown__body .dropdown__item {
+  padding-block: 10px;
+  color: #666;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+}
+.dropdown .dropdown__body .dropdown__item:not(:last-child) {
+  border-bottom: 1px solid #eee;
+}
+.dropdown .dropdown__body .dropdown__item:hover {
+  color: var(--firstColor);
+  transform: translateX(10px);
+  -webkit-transform: translateX(10px);
+  -moz-transform: translateX(10px);
+  -ms-transform: translateX(10px);
+  -o-transform: translateX(10px);
+}
+/* ? DropDown */
+/* ------------------------------------------------ */
+/* Modals */
+/* Settings */
+.settings-container {
+  padding-block: 55px;
+}
+.settings {
+  width: 32%;
+  height: 100%;
+  /* height: 23%; */
+  background-color: white;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+  overflow-y: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.settings,
+.scroll {
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+}
+.settings .scroll {
+  overflow-y: scroll;
+  height: 80%;
+  /* height: 0; */
+  padding-inline: 20px;
+}
+.settings > div:first-child {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 20px;
+  padding: 20px;
+  backdrop-filter: blur(2px);
+}
+.settings > div:last-child {
+  backdrop-filter: blur(2px);
+  padding: 20px;
+}
+.settings > div:first-child svg {
+  font-size: 22px;
+  color: var(--thirdColor);
+  cursor: pointer;
+}
+.settings :where(.timer_settings, .theme_settings, .sound_settings) {
+  padding-block: 30px;
+}
+.settings :where(.timer_settings, .sound_settings) {
+  border-bottom: 1px solid #ccc;
+}
+.settings
+  :where(.timer_settings > h3, .theme_settings > h3, .sound_settings > h3) {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  color: var(--thirdColor);
+  margin-bottom: 20px;
+}
+.settings p {
+  font-weight: bold;
+  color: var(--firstColor);
+}
+.settings .timer_settings .times {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  gap: 35px;
+}
+.settings .timer_settings .times label {
+  font-size: 14px;
+  color: #bbb;
+  font-weight: bold;
+}
+.settings [type="number"] {
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #eee;
+  border: none;
+  outline-color: transparent;
+  margin-top: 8px;
+}
+.settings .timer_settings > div:not(:first-of-type),
+.settings .theme_settings > div,
+.settings .sound_settings > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+}
+.settings .timer_settings .longBreak_interval {
+  width: 100px;
+}
+.settings .theme_settings .themes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+.settings .theme_settings .themes div {
+  width: 35px;
+  height: 35px;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: red;
+  transition: opacity 0.3s;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -o-border-radius: 6px;
+  -webkit-transition: opacity 0.3s;
+  -moz-transition: opacity 0.3s;
+  -ms-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+}
+.settings .theme_settings .themes div:hover {
+  opacity: 0.7;
+}
+.settings .sound_settings .repeat {
+  width: fit-content;
+  margin-left: auto;
+  gap: 28px;
+}
+.settings .sound_settings .repeat input {
+  width: 70px;
+}
+.settings div:has(.apply) {
+  display: flex;
+  justify-content: space-between;
+}
+.settings button {
+  border: 0;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 10px 15px;
+  border-radius: 15px;
+  cursor: pointer;
+}
+.settings button.apply {
+  background-color: var(--firstColor);
+}
+.settings button.reset {
+  background-color: #ba4949;
+}
+
+/* Change Option */
+.changeOption,
+.settings-container,
+.themeColors {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(1.5px);
+  display: grid;
+  place-items: center;
+  z-index: -1;
+  opacity: 0;
+  transition: 0.5s;
+  -webkit-transition: 0.5s;
+  -moz-transition: 0.5s;
+  -ms-transition: 0.5s;
+  -o-transition: 0.5s;
+}
+.changeOption > div {
+  width: 40%;
+  height: 45%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  position: relative;
+}
+.changeOption > div p {
+  line-height: 2;
+  color: var(--thirdColor);
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.changeOption > div img {
+  width: 100px;
+  margin-top: 10px;
+}
+.changeOption > div .buttons {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+}
+.changeOption > div .buttons button {
+  outline-color: transparent;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 11px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+}
+.changeOption > div .buttons button.ok {
+  background-color: #f87070;
+}
+.changeOption > div .buttons button.cancel {
+  background-color: var(--firstColor);
+}
+/* Change theme */
+.themeColors > div {
+  width: 32%;
+  height: 35%;
+  background-color: white;
+  padding: 20px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 0 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  position: relative;
+}
+.themeColors p {
+  color: var(--thirdColor);
+  font-weight: bold;
+  font-size: 18px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 20px;
+}
+.themeColors .themes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 25px;
+}
+.themeColors .themes div {
+  width: 65px;
+  height: 65px;
+  cursor: pointer;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  transition: opacity 0.3s;
+  -webkit-transition: opacity 0.3s;
+  -moz-transition: opacity 0.3s;
+  -ms-transition: opacity 0.3s;
+  -o-transition: opacity 0.3s;
+}
+.themeColors .themes div:hover {
+  opacity: 0.7;
+}
+.themeColors .themes div svg {
+  color: white;
+  font-size: 25px;
+}
+/* Display the modals */
+.show {
+  opacity: 1;
+  z-index: 2;
+}
+/* Sounds */
+.sounds {
+  display: none;
+}
+
+/* Progress Circle  */
+.progress-circle {
+  display: inline-block;
+  vertical-align: middle;
+  position: absolute;
+  z-index: -1;
+}
+.progress-circle__fill {
+  fill: none;
+  stroke: #fff;
+  stroke-linecap: round;
+  stroke-width: 10;
+  stroke-dasharray: 1256.64;
+  stroke-dashoffset: 127;
+  transition: stroke-dashoffset 1s linear;
+}

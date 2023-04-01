@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Focusize</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
+  </head>
+  <body>
+    <div>
+      <div>
+        <img src="icons8-goal-oriented-focus-100.png" alt="" />
+        <h2>Focusize</h2>
+      </div>
+      <div class="settings_open">
+        <i class="fa-solid fa-gear setting_icon"></i>
+      </div>
+    </div>
+    <div class="options">
+      <div class="pomodoro" data-time="25">
+        <p>Pomodoro</p>
+      </div>
+      <div class="shortBreak" data-time="5">
+        <p>Short Break</p>
+      </div>
+      <div class="longBreak" data-time="15">
+        <p>Long Break</p>
+      </div>
+    </div>
+    <div class="timer">
+      <h1></h1>
+      <button class="start">START</button>
+      <svg class="progress-circle" width="400" height="400">
+        <defs>
+          <filter id="drop-shadow">
+            <feDropShadow
+              dx="0"
+              dy="0"
+              stdDeviation="8"
+              flood-color="#rgba(0,0,0,0.5)"
+              flood-opacity="0.5"
+            />
+          </filter>
+        </defs>
+        <circle
+          class="progress-circle__fill"
+          r="180"
+          cx="200"
+          cy="200"
+          filter="url(#drop-shadow)"
+        ></circle>
+      </svg>
+    </div>
+    <!-- Sounds audios -->
+    <div class="sounds">
+      <audio src="click.mp3" id="clickSound"></audio>
+      <!-- ALarms -->
+      <audio src="beep.mp3" id="beepAlarmSound"></audio>
+      <audio src="digit.mp3" id="digitAlarmSound"></audio>
+      <audio src="mechanic.mp3" id="mechanicAlarmSound"></audio>
+      <!-- Ticking -->
+      <audio src="fast ticking.mp3" id="fastTickingSound"></audio>
+      <audio src="slow ticking.mp3" id="slowTickingSound"></audio>
+    </div>
+    <!-- Modals -->
+    <div class="settings-container">
+      <div class="settings">
+        <div>
+          <h2>Settings</h2>
+          <div class="close">
+            <i class="fa-solid fa-xmark"></i>
+          </div>
+        </div>
+        <div class="scroll">
+          <div class="timer_settings">
+            <h3><i class="fa-regular fa-clock"></i> TIMER</h3>
+            <p>Time (Minutes)</p>
+            <div class="times">
+              <div>
+                <label>Pomodoro</label>
+                <input type="number" value="25" min="1" class="pomodoro_time" />
+              </div>
+              <div>
+                <label>Short Break</label>
+                <input
+                  type="number"
+                  value="5"
+                  min="0"
+                  class="shortBreak_time"
+                />
+              </div>
+              <div>
+                <label>Long Break</label>
+                <input
+                  type="number"
+                  value="15"
+                  min="0"
+                  class="longBreak_time"
+                />
+              </div>
+            </div>
+            <div>
+              <p>Auto Start Breaks</p>
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    class="toggle-checkbox autoStartBreaks"
+                  />
+                  <div class="toggle-switch"></div>
+                </label>
+              </div>
+            </div>
+            <div>
+              <p>Auto Start Pomodoros</p>
+              <div>
+                <label>
+                  <input
+                    type="checkbox"
+                    class="toggle-checkbox autoStartPomodoros"
+                  />
+                  <div class="toggle-switch"></div>
+                </label>
+              </div>
+            </div>
+            <div>
+              <p>Long Break Interval</p>
+              <input
+                type="number"
+                value="4"
+                min="0"
+                class="longBreak_interval"
+              />
+            </div>
+          </div>
+          <div class="sound_settings">
+            <h3><i class="fa-solid fa-volume-high"></i> SOUND</h3>
+            <div>
+              <p>Alarm Sound</p>
+              <div class="dropdown alarm_sounds">
+                <div class="dropdown__header">
+                  <div class="dropdown__title">
+                    <span>Beep</span>
+                    <i class="fa-solid fa-caret-down"></i>
+                  </div>
+                </div>
+                <ul class="dropdown__body">
+                  <li class="dropdown__item" data-audio="beepAlarmSound">
+                    Beep
+                  </li>
+                  <li class="dropdown__item" data-audio="digitAlarmSound">
+                    Digit
+                  </li>
+                  <li class="dropdown__item" data-audio="mechanicAlarmSound">
+                    Mechanic
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="repeat">
+              <p>Repeat</p>
+              <input type="number" value="0" min="0" class="alarm_repetition" />
+            </div>
+            <div>
+              <p>Ticking Sound</p>
+              <div class="dropdown ticking_sounds">
+                <div class="dropdown__header">
+                  <div class="dropdown__title">
+                    <span>Ticking Fast</span>
+                    <i class="fa-solid fa-caret-down"></i>
+                  </div>
+                </div>
+                <ul class="dropdown__body">
+                  <li class="dropdown__item">None</li>
+                  <li class="dropdown__item" data-audio="fastTickingSound">
+                    Ticking Fast
+                  </li>
+                  <li class="dropdown__item" data-audio="slowTickingSound">
+                    Ticking Slow
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="theme_settings">
+            <h3><i class="fa-solid fa-wand-magic-sparkles"></i> THEME</h3>
+            <div>
+              <p>Color Themes</p>
+              <div class="themes">
+                <div class="pomodoro_theme" data-themeoption="Pomodoro"></div>
+                <div
+                  class="shortBreak_theme"
+                  data-themeoption="Short Break"
+                ></div>
+                <div
+                  class="longBreak_theme"
+                  data-themeoption="Long Break"
+                ></div>
+              </div>
+            </div>
+            <div>
+              <p>Dark Mode when running</p>
+              <div>
+                <label>
+                  <input type="checkbox" class="toggle-checkbox darkMode" />
+                  <div class="toggle-switch"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <button class="apply">Apply</button>
+          <button class="reset">Reset</button>
+        </div>
+      </div>
+    </div>
+    <div class="changeOption">
+      <div>
+        <p>The timer is still running, are you sure you want to switch?</p>
+        <img src="icons8-time-80.png" alt="" />
+        <div class="buttons">
+          <button class="ok">Ok</button>
+          <button class="cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <div class="themeColors">
+      <div>
+        <p>Pick a color for <span class="current_option"></span></p>
+        <div class="themes">
+          <div data-color="#ba4949"></div>
+          <div data-color="#38858a"></div>
+          <div data-color="#397097"></div>
+          <div data-color="#7d53a2"></div>
+          <div data-color="#a4893c"></div>
+          <div data-color="#518a58"></div>
+          <div data-color="#af4e91"></div>
+          <div data-color="#545764"></div>
+        </div>
+      </div>
+    </div>
+    <script src="all.min.js"></script>
+  </body>
+</html>

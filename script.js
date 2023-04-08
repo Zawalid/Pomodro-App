@@ -13,8 +13,16 @@ const options = [...document.querySelector(".options").children];
 //Change the option confirmation
 const changeOptionModal = document.querySelector(".changeOption");
 const closeModal = document.querySelector(".changeOption > div .close");
-const okBtn = document.querySelector(".changeOption > div .ok");
-const cancelBtn = document.querySelector(".changeOption > div .cancel");
+const changeOptionOkBtn = document.querySelector(".changeOption > div .ok");
+const changeOptionCancelBtn = document.querySelector(
+  ".changeOption > div .cancel"
+);
+//Reset settings modal
+const resetSettingsModal = document.querySelector(".resetSettings");
+const resetSettingsOkBtn = document.querySelector(".resetSettings > div .ok");
+const resetSettingsCancelBtn = document.querySelector(
+  ".resetSettings > div .cancel"
+);
 //settings
 const settings = document.querySelector(".settings");
 const settingsModal = document.querySelector(".settings-container");
@@ -75,7 +83,8 @@ let time, //Current timer value
   selectedSound,
   selectedAlarmSound, //To keep track of the selected alarm sound
   selectedTickingSound, //To keep track of the selected ticking sound
-  pauseAudio; //Keep track of the setTimeOut (stop it if the user chooses another sound instead of waiting for the expiration time )
+  pauseAudio, //Keep track of the setTimeOut (stop it if the user chooses another sound instead of waiting for the expiration time )
+  initialTime;
 //To keep trace when to switch to long break
 let longBreakTimeIntervalValue = +longBreakTimeInterval.value;
 let pomodoroCount = 0;
@@ -125,6 +134,7 @@ if (localStorage.getItem("timerThemes")) {
     timerThemes[theme] = savedTimerThemes[theme];
   }
 }
+
 //Set the dropdowns
 dropDownFunc(alarmSoundsDropDown, alarmSounds);
 dropDownFunc(tickingSoundsDropDown, tickingSounds);
@@ -136,9 +146,6 @@ displayTimeAndMsg();
 function startTimer(duration) {
   let timer, minutes, seconds;
   timer = duration * 60;
-  const initialTime = timer;
-  c(initialTime);
-  const wholeCircle = 1256.64;
   const timerFunction = () => {
     minutes = parseInt(timer / 60, 10);
     seconds = parseInt(timer % 60, 10);
@@ -151,8 +158,8 @@ function startTimer(duration) {
     //Keep trace of the current time value for the stop state
     timeAtPause = timer;
     //Decrement the time
-    const percentage = (timer / initialTime) * 100;
-    const stroke = wholeCircle - (wholeCircle * percentage) / 100 + 127;
+    const percentage = (timer / (initialTime * 60)) * 100;
+    const stroke = 1256.64 - (1256.64 * percentage) / 100 + 127;
     progressCircle.style.strokeDashoffset = stroke;
     if (--timer < 0) {
       clearInterval(startInterval);
@@ -207,7 +214,7 @@ function displayTimeAndMsg() {
   currentOption = options.find((e) => e.classList.contains("active"));
   localStorage.setItem("currentOption", currentOption.classList[0]);
   //Set the time depending on the chosen option
-  time = currentOption.dataset.time;
+  initialTime = time = currentOption.dataset.time;
   //If time is on minutes
   const minutesAndSeconds = `${time < 10 ? "0" : ""}${time}:00`;
   //If time is on seconds
@@ -380,7 +387,6 @@ function dropDownFunc(dropDown, dropDownContent) {
 startBtn.addEventListener("click", function () {
   //Click sound
   clickSound.play();
-
   if (this.className == "start") {
     //Add the click animation
     document.querySelector(".timer").classList.add("started");
@@ -438,11 +444,11 @@ options.forEach((e) => {
     } else {
       changeOptionModal.classList.add("show");
       changeOptionModal.addEventListener("click", (event) => {
-        if (event.target == okBtn) {
+        if (event.target == changeOptionOkBtn) {
           changeOptionModal.classList.remove("show");
           chooseOption(e);
           selectedTickingSound.pause();
-        } else if (event.target == cancelBtn) {
+        } else if (event.target == changeOptionCancelBtn) {
           changeOptionModal.classList.remove("show");
         }
       });
@@ -507,30 +513,41 @@ settingsSave.addEventListener("click", () => {
 });
 //Reset Settings
 settingsReset.addEventListener("click", () => {
-  //Reset the settings
-  getDefaultSettings();
-  //Reset the time and theme
-  displayTimeAndMsg();
-  //Clear localStorage
-  localStorage.clear();
-  //Reset the themes
-  const defaultThemes = ["#ba4949", "#7d53a2", "#38858a"];
-  [...themeColors.children].forEach((e, i) => {
-    e.style.backgroundColor = defaultThemes[i];
+  resetSettingsModal.classList.add("show");
+  resetSettingsModal.addEventListener("click", (event) => {
+    if (event.target == resetSettingsOkBtn) {
+      resetSettingsModal.classList.remove("show");
+      closeSettings();
+
+      //Reset the settings
+      getDefaultSettings();
+      //Reset the time and theme
+      displayTimeAndMsg();
+      //Clear localStorage
+      localStorage.clear();
+      //Reset the themes
+      const defaultThemes = ["#ba4949", "#7d53a2", "#38858a"];
+      [...themeColors.children].forEach((e, i) => {
+        e.style.backgroundColor = defaultThemes[i];
+      });
+      //Set the timerThemes to the default
+      defaultThemes.forEach((theme, i) => {
+        timerThemes[Object.keys(timerThemes)[i]].color = theme;
+      });
+      // Set the colors on the squares of options
+      [...themesChooser.children].forEach((e) => {
+        e.style.backgroundColor =
+          timerThemes[e.classList[0].split("_")[0]].color;
+      });
+      //Set the theme of the current option
+      document.documentElement.style.setProperty(
+        "--theme",
+        timerThemes[currentOption.classList[0]].color
+      );
+    } else if (event.target == resetSettingsCancelBtn) {
+      resetSettingsModal.classList.remove("show");
+    }
   });
-  //Set the timerThemes to the default
-  defaultThemes.forEach((theme, i) => {
-    timerThemes[Object.keys(timerThemes)[i]].color = theme;
-  });
-  // Set the colors on the squares of options
-  [...themesChooser.children].forEach((e) => {
-    e.style.backgroundColor = timerThemes[e.classList[0].split("_")[0]].color;
-  });
-  //Set the theme of the current option
-  document.documentElement.style.setProperty(
-    "--theme",
-    timerThemes[currentOption.classList[0]].color
-  );
 });
 //Set the colors on the squares of themesChooser
 [...themesChooser.children].forEach((e) => {
@@ -601,10 +618,11 @@ themesChooser.addEventListener("click", (event) => {
       //Save timer themes in  localStorage
       localStorage.setItem("timerThemes", JSON.stringify(timerThemes));
       //Set the correspondent theme
-      document.documentElement.style.setProperty(
-        "--theme",
-        timerThemes[currentOption.classList[0]].color
-      );
+
+      // document.documentElement.style.setProperty(
+      //   "--theme",
+      //   timerThemes[currentOption.classList[0]].color
+      // );
     }
   });
 });

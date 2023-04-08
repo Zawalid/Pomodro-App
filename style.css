@@ -286,8 +286,8 @@ body > :first-child h2 {
 }
 .settings {
   width: 32%;
-  height: 100%;
-  /* height: 23%; */
+  /* height: 100%; */
+  height: 23%;
   background-color: white;
   border-radius: 15px;
   -webkit-border-radius: 15px;
@@ -575,4 +575,8 @@ body > :first-child h2 {
   stroke-dasharray: 1256.64;
   stroke-dashoffset: 127;
   transition: stroke-dashoffset 1s linear;
+  -webkit-transition: stroke-dashoffset 1s linear;
+  -moz-transition: stroke-dashoffset 1s linear;
+  -ms-transition: stroke-dashoffset 1s linear;
+  -o-transition: stroke-dashoffset 1s linear;
 }

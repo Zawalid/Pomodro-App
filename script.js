@@ -69,15 +69,13 @@ let time, //Current timer value
   timeAtPause, //Timer value at pause
   startInterval, //To pause the timer
   autoStartBreaksCheck, //Check for the autoStartBreaks switch
-  autoStartPomodorosCheck, //Check for the autoStartPomodoros switch
+  autoStartPomodorosCheck, //Check for the autoStart Pomodoros switch
   darkModeCheck, //Check for the darkMode switch
   currentOption, //To keep track of the current option (pomodoro/short/long)
   selectedSound,
   selectedAlarmSound, //To keep track of the selected alarm sound
   selectedTickingSound, //To keep track of the selected ticking sound
-  pauseAudio, //Keep track of the setTimeOut (stop it if the user chooses another sound instead of waiting for the expiration time )
-  selectedAlarmSoundName,
-  selectedTickingSoundName;
+  pauseAudio; //Keep track of the setTimeOut (stop it if the user chooses another sound instead of waiting for the expiration time )
 //To keep trace when to switch to long break
 let longBreakTimeIntervalValue = +longBreakTimeInterval.value;
 let pomodoroCount = 0;
@@ -85,6 +83,9 @@ let pomodoroCount = 0;
 let currentStatus = "focus";
 //To display the time on the tab title
 let displayTimeOnTitle = document.head.querySelector("title");
+//To keep track of the selected sounds
+let selectedAlarmSoundName = "Beep";
+let selectedTickingSoundName = "Fast Ticking";
 //Timer themes
 const timerThemes = {
   pomodoro: {
@@ -136,7 +137,8 @@ function startTimer(duration) {
   let timer, minutes, seconds;
   timer = duration * 60;
   const initialTime = timer;
-  const wholeCircle = 1130;
+  c(initialTime);
+  const wholeCircle = 1256.64;
   const timerFunction = () => {
     minutes = parseInt(timer / 60, 10);
     seconds = parseInt(timer % 60, 10);
@@ -253,6 +255,8 @@ function chooseOption(el) {
   setClassAndTexContent("start", startBtn);
   //Set the time and display it
   displayTimeAndMsg();
+  //Reset the progress circle
+  progressCircle.style.strokeDashoffset = 127;
 }
 //Get the saved settings
 function getSettings() {
@@ -303,9 +307,10 @@ function getDefaultSettings() {
   selectedAlarmSound = defaultAlarm;
   selectedTickingSound = defaultTicking;
   //Sound Names
-  alarmSoundsDropDown.firstElementChild.firstElementChild.textContent = "Beep";
+  alarmSoundsDropDown.firstElementChild.firstElementChild.textContent =
+    selectedAlarmSoundName;
   tickingSoundsDropDown.firstElementChild.firstElementChild.textContent =
-    "Fast Ticking";
+    selectedTickingSoundName;
 }
 //Close the settings modal
 function closeSettings() {
@@ -456,9 +461,8 @@ settingOpen.addEventListener("click", () => {
   }, 500);
 });
 
-settingsClose.addEventListener("click", () => {
-  closeSettings();
-});
+settingsClose.addEventListener("click", () => closeSettings());
+
 settingsSave.addEventListener("click", () => {
   time = time;
   closeSettings();

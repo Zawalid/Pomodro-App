@@ -66,7 +66,7 @@ const tickingSoundsDropDown = document.querySelector(
 );
 const tickingSounds = document.querySelector(".ticking_sounds .dropdown__body");
 const defaultAlarm = document.getElementById("beepAlarmSound");
-const defaultTicking = document.getElementById("fastTickingSound");
+const defaultTicking = document.getElementById("slowTickingSound");
 // Progress
 const progressCircle = document.querySelector(".progress-circle__fill");
 //==========================================================================
@@ -94,7 +94,7 @@ let currentStatus = "focus";
 let displayTimeOnTitle = document.head.querySelector("title");
 //To keep track of the selected sounds
 let selectedAlarmSoundName = "Beep";
-let selectedTickingSoundName = "Fast Ticking";
+let selectedTickingSoundName = "Slow Ticking";
 //Timer themes
 const timerThemes = {
   pomodoro: {
@@ -410,6 +410,8 @@ startBtn.addEventListener("click", function () {
         .find((e) => e.classList.contains("active"))
         .classList.add("active_dark");
     }
+    //Stop the selected alarm sound
+    selectedAlarmSound ? selectedAlarmSound.pause() : "";
   } else {
     //Remove the click animation
     document.querySelector(".timer").classList.remove("started");
@@ -422,10 +424,6 @@ startBtn.addEventListener("click", function () {
       timerThemes[currentOption.classList[0]].color
     );
     //Remove te darkMode styles
-    if (darkModeCheck) {
-    }
-    document.querySelector(".timer").style.backgroundColor =
-      "rgba(255, 255, 255, 0.1)";
     options[0].parentElement.style.backgroundColor = "rgba(255, 255, 255, 0.1)";
     options
       .find((e) => e.classList.contains("active"))
@@ -470,6 +468,13 @@ settingOpen.addEventListener("click", () => {
 settingsClose.addEventListener("click", () => closeSettings());
 
 settingsSave.addEventListener("click", () => {
+  //Stop the timer and reset everything
+  clearInterval(startInterval);
+  startBtn.className = "start";
+  setClassAndTexContent("start", startBtn);
+  selectedTickingSound ? selectedTickingSound.pause() : "";
+  document.querySelector(".timer").classList.remove("started");
+
   time = time;
   closeSettings();
   //Set values
@@ -510,6 +515,8 @@ settingsSave.addEventListener("click", () => {
       selectedSound.pause();
     }
   }
+  //Reset the progress circle
+  progressCircle.style.strokeDashoffset = 127;
 });
 //Reset Settings
 settingsReset.addEventListener("click", () => {

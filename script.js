@@ -67,8 +67,6 @@ const tickingSoundsDropDown = document.querySelector(
 const tickingSounds = document.querySelector(".ticking_sounds .dropdown__body");
 const defaultAlarm = document.getElementById("beepAlarmSound");
 const defaultTicking = document.getElementById("slowTickingSound");
-// Progress
-const progressCircle = document.querySelector(".progress-circle__fill");
 //==========================================================================
 //* Variables
 //To keep trace of the time
@@ -157,10 +155,13 @@ function startTimer(duration) {
     displayTimeOnTitle.textContent = `${minutes}:${seconds} - ${getStatus()}`;
     //Keep trace of the current time value for the stop state
     timeAtPause = timer;
-    //Decrement the time
     const percentage = (timer / (initialTime * 60)) * 100;
-    const stroke = 1256.64 - (1256.64 * percentage) / 100 + 127;
-    progressCircle.style.strokeDashoffset = stroke;
+    // Progress
+    document.documentElement.style.setProperty(
+      "--progressBarWidth",
+      `${percentage}%`
+    );
+    //Decrement the time
     if (--timer < 0) {
       clearInterval(startInterval);
       setClassAndTexContent("start", startBtn);
@@ -262,8 +263,10 @@ function chooseOption(el) {
   setClassAndTexContent("start", startBtn);
   //Set the time and display it
   displayTimeAndMsg();
-  //Reset the progress circle
-  progressCircle.style.strokeDashoffset = 127;
+  //Reset the progress
+  document.documentElement.style.setProperty("--progressBarWidth", `100%`);
+  //Turn off  the selected alarm sound
+  selectedAlarmSound ? selectedAlarmSound.pause() : "";
 }
 //Get the saved settings
 function getSettings() {
@@ -515,8 +518,8 @@ settingsSave.addEventListener("click", () => {
       selectedSound.pause();
     }
   }
-  //Reset the progress circle
-  progressCircle.style.strokeDashoffset = 127;
+  //Reset the progress
+  document.documentElement.style.setProperty("--progressBarWidth", `100%`);
 });
 //Reset Settings
 settingsReset.addEventListener("click", () => {

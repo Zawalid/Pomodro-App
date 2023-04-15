@@ -17,6 +17,7 @@
       <div class="settings_open">
         <i class="fa-solid fa-gear setting_icon"></i>
       </div>
+      <div class="progress"></div>
     </div>
     <div class="options">
       <div class="pomodoro" data-time="25">
@@ -32,26 +33,6 @@
     <div class="timer">
       <h1></h1>
       <button class="start">START</button>
-      <svg class="progress-circle" width="400" height="400">
-        <defs>
-          <filter id="drop-shadow">
-            <feDropShadow
-              dx="0"
-              dy="0"
-              stdDeviation="8"
-              flood-color="#rgba(0,0,0,0.5)"
-              flood-opacity="0.5"
-            />
-          </filter>
-        </defs>
-        <circle
-          class="progress-circle__fill"
-          r="180"
-          cx="200"
-          cy="200"
-          filter="url(#drop-shadow)"
-        ></circle>
-      </svg>
     </div>
     <!-- Sounds audios -->
     <div class="sounds">

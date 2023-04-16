@@ -1,5 +1,14 @@
 "use strict";
 const c = console.log;
+
+//Pwa
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker
+    .register("/server-worker.js")
+    .then((reg) => console.log("service worker registered", reg))
+    .catch((err) => console.log("service worker not registered", err));
+}
+
 //* Selectors
 //Options
 const pomodoro = document.querySelector(".pomodoro");

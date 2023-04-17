@@ -1,19 +1,26 @@
 // Register the service worker
-self.addEventListener("install", function (event) {
-  console.log("Service worker installed");
+const CACHE_NAME = "my-cache";
+const urlsToCache = [
+  "/",
+  "/index.html",
+  "/style.css",
+  "/script.js",
+  "/icon.png",
+];
+
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(urlsToCache))
+  );
 });
 
-// Activate the service worker
-self.addEventListener("activate", function (event) {
-  console.log("Service worker activated");
-});
-
-// Intercept network requests
-self.addEventListener("fetch", function (event) {
-  console.log("Fetching resource: " + event.request.url);
+self.addEventListener("fetch", (event) => {
   event.respondWith(
-    caches.match(event.request).then(function (response) {
-      return response || fetch(event.request);
+    caches.match(event.request).then((response) => {
+      if (response) {
+        return response;
+      }
+      return fetch(event.request);
     })
   );
 });
@@ -24,7 +31,7 @@ self.addEventListener("push", function (event) {
   const title = "Push Notification";
   const options = {
     body: event.data.text(),
-    icon: "images/icon.png",
+    icon: "/icon.png",
   };
   event.waitUntil(self.registration.showNotification(title, options));
 });

@@ -1,8 +1,8 @@
 {
   "name": "Focusize",
   "short_name": "Focusize",
-  "theme_color": "#94acbf",
-  "background_color": "#94acbf",
+  "theme_color": "#fff",
+  "background_color": "#fff",
   "display": "standalone",
   "icons": [
     {

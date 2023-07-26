@@ -4,9 +4,35 @@ const c = console.log;
 //Pwa
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker
-    .register("/server-worker.js")
+    .register("/service-worker.js")
     .then((reg) => console.log("service worker registered", reg))
     .catch((err) => console.log("service worker not registered", err));
+}
+// Notification
+let permission = Notification.permission;
+if (permission === "granted") {
+  showNotification();
+} else if (permission === "default") {
+  requestAndShowPermission();
+}
+function showNotification(title, message) {
+  if (document.visibilityState === "visible") {
+    return;
+  }
+  const icon = "icon.png";
+  const body = message;
+  const notification = new Notification(title, { body, icon });
+  notification.onclick = () => {
+    notification.close();
+    window.parent.focus();
+  };
+}
+function requestAndShowPermission() {
+  Notification.requestPermission(function (permission) {
+    if (permission === "granted") {
+      showNotification();
+    }
+  });
 }
 
 //* Selectors
@@ -207,10 +233,14 @@ function startTimer(duration) {
         }
         //Stop the ticking sound
         selectedTickingSound.pause();
+        // Send time's up notification
+        showNotification("Time's up!", "Time's up! Take a break!");
       } else {
         //Switch to the pomodoro timer
         document.querySelector(".pomodoro").dispatchEvent(new Event("click"));
         if (autoStartPomodorosCheck) startBtn.dispatchEvent(new Event("click"));
+        // send time to focus notification
+        showNotification("Time to focus!", "Break time is over! Focus now!");
       }
     }
   };

@@ -1,5 +1,5 @@
 // Register the service worker
-const CACHE_NAME = "my-cache";
+const CACHE_NAME = "offline-cache-v1";
 const urlsToCache = [
   "/",
   "/index.html",
@@ -14,6 +14,20 @@ self.addEventListener("install", (event) => {
   );
 });
 
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys().then((keys) => {
+      return Promise.all(
+        keys.map((key) => {
+          if (key !== CACHE_NAME) {
+            caches.delete(key);
+          }
+        })
+      );
+    })
+  );
+});
+
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
@@ -23,15 +37,4 @@ self.addEventListener("fetch", (event) => {
       return fetch(event.request);
     })
   );
-});
-
-// Respond to push notifications
-self.addEventListener("push", function (event) {
-  console.log("Push notification received");
-  const title = "Push Notification";
-  const options = {
-    body: event.data.text(),
-    icon: "/icon.png",
-  };
-  event.waitUntil(self.registration.showNotification(title, options));
 });

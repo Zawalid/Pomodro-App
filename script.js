@@ -1,20 +1,17 @@
 "use strict";
-const c = console.log;
 
-//Pwa
+// Service Worker registration
 if ("serviceWorker" in navigator) {
   navigator.serviceWorker
     .register("/service-worker.js")
-    .then((reg) => console.log("service worker registered", reg))
     .catch((err) => console.log("service worker not registered", err));
 }
-// Notification
+// Request permission for notifications if not already granted
 let permission = Notification.permission;
-if (permission === "granted") {
-  showNotification();
-} else if (permission === "default") {
-  requestAndShowPermission();
+if (permission === "default" || permission === "denied") {
+  Notification.requestPermission((_) => {});
 }
+// Show a custom notification
 function showNotification(title, message) {
   if (document.visibilityState === "visible") {
     return;
@@ -26,13 +23,6 @@ function showNotification(title, message) {
     notification.close();
     window.parent.focus();
   };
-}
-function requestAndShowPermission() {
-  Notification.requestPermission(function (permission) {
-    if (permission === "granted") {
-      showNotification();
-    }
-  });
 }
 
 //* Selectors

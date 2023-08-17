@@ -19,7 +19,7 @@ function showNotification(title, message) {
   if (document.visibilityState === "visible") {
     return;
   }
-  const icon = "icon.png";
+  const icon = "Logo.png";
   const body = message;
   const notification = new Notification(title, { body, icon });
   notification.onclick = () => {

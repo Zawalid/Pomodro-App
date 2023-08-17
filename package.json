@@ -1,0 +1,17 @@
+{
+  "description": "",
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "cssnano": "^6.0.1",
+    "html-minifier": "^4.0.0",
+    "postcss": "^8.4.27",
+    "postcss-cli": "^10.1.0",
+    "uglify-js": "^3.17.4"
+  },
+  "scripts": {
+    "minifyHtml": "npx html-minifier --input-dir . --output-dir dist --file-ext html --collapse-whitespace --remove-comments --remove-optional-tags --remove-tag-whitespace --use-short-doctype --minify-css true --minify-js true",
+    "minifyCss": "npx postcss style.css > dist/style.min.css",
+    "minifyJs": "npx uglifyjs script.js -o dist/script.min.js",
+    "minify": "npm run minifyHtml && npm run minifyCss && npm run minifyJs"
+  }
+}

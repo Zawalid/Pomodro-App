@@ -255,7 +255,7 @@ body > :first-child h2 {
   color: #666;
   letter-spacing: 1px;
 }
-.dropdown .dropdown__header .dropdown__title svg {
+.dropdown .dropdown__header .dropdown__title i {
   color: var(--firstColor);
   font-size: 19px;
   cursor: pointer;
@@ -360,7 +360,7 @@ body > :first-child h2 {
   backdrop-filter: blur(2px);
   padding: 20px;
 }
-.settings > div:first-child svg {
+.settings > div:first-child i {
   font-size: 22px;
   color: var(--thirdColor);
   cursor: pointer;
@@ -592,7 +592,7 @@ body > :first-child h2 {
 .themeColors .themes div:hover {
   opacity: 0.7;
 }
-.themeColors .themes div svg {
+.themeColors .themes div i {
   color: white;
   font-size: 25px;
 }

@@ -365,7 +365,7 @@ function closeSettings() {
 //Dropdown
 function dropDownFunc(dropDown, dropDownContent) {
   dropDown.addEventListener("click", (e) => {
-    if (e.target.closest("svg")) {
+    if (e.target.closest("i")) {
       dropDownContent.classList.toggle("drop");
       dropDownContent.addEventListener("click", (e) => {
         if (e.target.closest("li")) {
